@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tkinter import Tk, StringVar, Label, Entry, Button, ttk
+from tkinter import Tk, StringVar, Label, Entry, ttk
 from functools import partial
 from slackclient import SlackClient
 import config as config
