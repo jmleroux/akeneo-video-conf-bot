@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tkinter import Tk, StringVar, Label, Entry, Button
+from tkinter import Tk, StringVar, Label, Entry, Button, ttk
 from functools import partial
 from slackclient import SlackClient
 import config as config
@@ -27,8 +27,8 @@ message = Label(windowRoot, text='')
 input_box = StringVar(windowRoot)
 
 entry_name = Entry(windowRoot, textvariable=input_box)
-button = Button(windowRoot, text='clic',
-                command=partial(send_to_slack, message, input_box))
+ttk.Style().configure("TButton", padding=1, background="#ccc")
+button = ttk.Button(windowRoot, text='Send', command=partial(send_to_slack, message, input_box))
 
 windowTitle.grid(column=0, row=0)
 entry_name.grid(column=0, row=2)
