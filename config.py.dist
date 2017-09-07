@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+BOT_TOKEN = "the-bot-token"
+VIDEO_CONF_CHANNEL = "#the-channel"
+MESSAGE_PATTERN = "Zoom ID for the next Friday event = %s! :tada:"
