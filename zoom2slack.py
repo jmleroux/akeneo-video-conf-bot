@@ -15,7 +15,8 @@ def send_to_slack(message_field, input_field):
     sc.api_call(
         "chat.postMessage",
         channel=config.VIDEO_CONF_CHANNEL,
-        text=config.MESSAGE_PATTERN % text
+        text=config.MESSAGE_PATTERN % text,
+        as_user=True
     )
     message_field.config(text='Sent to Slack')
     input_field.set('')
