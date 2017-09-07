@@ -27,8 +27,13 @@ Or with the executable shell launcher:
 ./run.sh
 ```
 
-[Screen 01]: doc/img/screenshot-01.png
-[Screen 02]: doc/img/screenshot-02.png
+Screenshot before clicking the button:
+
+![Screen 01](doc/img/screenshot-01.png)
+
+Screenshot after:
+
+![Screen 02](doc/img/screenshot-02.png)
 
 ### Resources:
 
