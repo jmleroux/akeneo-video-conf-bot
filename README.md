@@ -2,17 +2,30 @@
 
 ## Requirements
 
+System requirements:
+
 * Python 3
 * TKinter
+
+```
+sudo apt-get install python3-pip
+sudo apt-get install python3-tk
+```
+
+Python requirements:
+
 * Slack client
 
 ```
-apt-get install python3-tk
-pip install slackclient
+sudo -H pip3 install setuptools
+sudo -H pip3 install slackclient
 ```
+
+Then get the project and enter it:
 
 ```
 git clone https://github.com/jmleroux/akeneo-video-conf-bot.git
+cd akeneo-video-conf-bot
 ```
 
 # Usage
