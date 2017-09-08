@@ -4,22 +4,35 @@
 from tkinter import Tk, StringVar, Label, Entry, ttk
 from functools import partial
 from slackclient import SlackClient
+import re
 import config as config
 
 
 def send_to_slack(message_field, input_field):
     text = input_field.get()
+    if valid_zoom_id(text=text):
+        post_to_slack(text)
+        message_field.config(text='Sent to Slack')
+        input_field.set('')
+    else:
+        message_field.config(text='Invalid format')
 
+
+def valid_zoom_id(text):
+    match = re.search('^[0-9]{3}-?[0-9]{3}-?[0-9]{3}$', text, flags=re.IGNORECASE)
+    if match is not None:
+        return True
+    return False
+
+
+def post_to_slack(text):
     sc = SlackClient(config.BOT_TOKEN)
-
     sc.api_call(
         "chat.postMessage",
         channel=config.VIDEO_CONF_CHANNEL,
         text=config.MESSAGE_PATTERN % text,
         as_user=True
     )
-    message_field.config(text='Sent to Slack')
-    input_field.set('')
 
 
 windowRoot = Tk()

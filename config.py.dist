@@ -4,10 +4,8 @@
 BOT_TOKEN = "the-bot-token"
 VIDEO_CONF_CHANNEL = "#the-channel"
 MESSAGE_PATTERN = '''
-----------------------------------------------------------------------------
-
-:clapper:     Zoom ID for the next Friday event = %s     :clapper:"
-
-----------------------------------------------------------------------------
+Zoom ID for the next Friday event
+:clapper:   %s   :clapper:
+--------------------------
 _do not forget to record it_
 '''
