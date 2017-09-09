@@ -4,6 +4,9 @@
 from slackclient import SlackClient
 import re
 
+__author__ = "JM Leroux <jmleroux.pro@gmail.com"
+__license__ = "OSL 3.0"
+
 
 class Slack:
     __token = ''
