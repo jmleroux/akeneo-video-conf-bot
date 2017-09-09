@@ -36,7 +36,8 @@ class Handler:
         elif slack.STATUS_INVALID_FORMAT == status:
             status_bar.set_property("label", "Invalid Zoom ID")
         else:
-            status_bar.set_property("label", "Error when sending message")
+            error = slack.get_last_error()
+            status_bar.set_property("label", "Error when sending message: %s" % error)
 
 
 builder = Gtk.Builder()

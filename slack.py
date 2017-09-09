@@ -9,6 +9,7 @@ class Slack:
     __token = ''
     __message_pattern = ''
     __target_channel = ''
+    __last_error = ''
 
     STATUS_SENT = 'sent'
     STATUS_INVALID_FORMAT = 'invalid format'
@@ -22,6 +23,9 @@ class Slack:
     def get_channel(self):
         return self.__target_channel
 
+    def get_last_error(self):
+        return self.__last_error
+
     def send_message(self, message: str):
 
         if not self.is_valid_zoom_id(message):
@@ -29,14 +33,19 @@ class Slack:
 
         sc = SlackClient(self.__token)
 
-        sc.api_call(
+        result = sc.api_call(
             "chat.postMessage",
             channel=self.__target_channel,
             text=self.__message_pattern % message,
             as_user=True
         )
 
-        return self.STATUS_SENT
+        print(result)
+        if result['ok']:
+            return self.STATUS_SENT
+        else:
+            self.__last_error = result['error']
+            return self.STATUS_ERROR
 
     @staticmethod
     def is_valid_zoom_id(zoom_id: str):
