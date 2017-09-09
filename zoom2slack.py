@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os.path
 import gi
 import config as config
 from slack import Slack
@@ -11,6 +12,7 @@ from gi.repository import Gtk
 
 class Handler:
     def on_close_window(self, *args):
+        os.remove(lock_file)
         Gtk.main_quit(*args)
 
     def on_send(self, button):
@@ -39,6 +41,16 @@ class Handler:
             error = slack.get_last_error()
             status_bar.set_property("label", "Error when sending message: %s" % error)
 
+
+
+lock_file = "var/zoom2slack.run"
+if os.path.isfile(lock_file):
+    print("Instance already running")
+    exit(0)
+else:
+    lock_handle = open(lock_file, 'w')
+    lock_handle.write('1')
+    lock_handle.close()
 
 builder = Gtk.Builder()
 builder.add_from_file("ui.glade")
