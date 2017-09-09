@@ -14,15 +14,30 @@ class Handler:
         Gtk.main_quit(*args)
 
     def on_send(self, button):
-        print("Hello World!")
+        input_field = builder.get_object("input_field")
+        zoom_id = input_field.get_property("text")
 
-    def send_to_slack(message_field, input_field):
-        text = input_field.get()
+        if '' != zoom_id:
+            self.send_to_slack(zoom_id)
+        else:
+            status_bar = builder.get_object("status_bar")
+            status_bar.set_property("label", "Empty Zoom ID")
+
+    def send_to_slack(self, zoom_id: str):
+        message = "Zoom ID %s sent to channel %s" % (zoom_id, config.VIDEO_CONF_CHANNEL)
+        status_bar = builder.get_object("status_bar")
 
         slack = Slack(config)
-        slack.send_message(text)
-        # message_field.config(text='Sent to Slack')
-        # input_field.set('')
+        status = slack.send_message(zoom_id)
+
+        if slack.STATUS_SENT == status:
+            builder.get_object("status_bar")
+            status_bar.set_property("label", message)
+        elif slack.STATUS_INVALID_FORMAT == status:
+            status_bar.set_property("label", "Invalid Zoom ID")
+        else:
+            status_bar.set_property("label", "Error when sending message")
+
 
 builder = Gtk.Builder()
 builder.add_from_file("ui.glade")
@@ -32,40 +47,3 @@ window = builder.get_object("root_window")
 window.show_all()
 
 Gtk.main()
-
-# from tkinter import Tk, StringVar, Label, Entry, ttk
-# from functools import partial
-# from slackclient import SlackClient
-# import config as config
-#
-#
-# def send_to_slack(message_field, input_field):
-#     text = input_field.get()
-#
-#     sc = SlackClient(config.BOT_TOKEN)
-#
-#     sc.api_call(
-#         "chat.postMessage",
-#         channel=config.VIDEO_CONF_CHANNEL,
-#         text=config.MESSAGE_PATTERN % text,
-#         as_user=True
-#     )
-#     message_field.config(text='Sent to Slack')
-#     input_field.set('')
-#
-#
-# windowRoot = Tk()
-# windowTitle = Label(windowRoot, text='Zoom to Slack')
-# message = Label(windowRoot, text='')
-# input_box = StringVar(windowRoot)
-#
-# entry_name = Entry(windowRoot, textvariable=input_box)
-# ttk.Style().configure("TButton", padding=1, background="#ccc")
-# button = ttk.Button(windowRoot, text='Send', command=partial(send_to_slack, message, input_box))
-#
-# windowTitle.grid(column=0, row=0)
-# entry_name.grid(column=0, row=2)
-# message.grid(column=0, row=3)
-# button.grid(column=0, row=4)
-#
-# windowRoot.mainloop()

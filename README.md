@@ -5,11 +5,11 @@
 System requirements:
 
 * Python 3
-* TKinter
+* Gtk Object
 
 ```
 sudo apt-get install python3-pip
-sudo apt-get install python3-tk
+sudo apt-get install python3-gi
 ```
 
 Python requirements:
@@ -17,7 +17,6 @@ Python requirements:
 * Slack client
 
 ```
-sudo -H pip3 install setuptools
 sudo -H pip3 install slackclient
 ```
 
@@ -40,14 +39,23 @@ Or with the executable shell launcher:
 ./run.sh
 ```
 
-Screenshot before clicking the button:
+## Screenshots:
 
-![Screen 01](doc/img/screenshot-01.png)
+![Start](doc/img/start.png)
 
-Screenshot after:
+Message sent:
 
-![Screen 02](doc/img/screenshot-02.png)
+![Sent](doc/img/sent_to_channel.png)
+
+Invalid format:
+
+![Invalid ID](doc/img/invalid_zoom_id.png)
+
+Error:
+
+![Error](doc/img/system_error.png)
 
 ### Resources:
 
 * https://github.com/slackapi/python-slackclient
+* https://developer.gnome.org/gtk3/3.22/gtk.html
