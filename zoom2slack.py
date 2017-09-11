@@ -54,10 +54,7 @@ def send_to_slack(zoom_id: str):
 
 def list_channels():
     slack = Slack(config)
-    result = slack.channels_list()
-    channels = []
-    for channel in result['channels']:
-        channels.append("#" + channel['name'])
+    channels = slack.get_my_channels()
     return channels
 
 

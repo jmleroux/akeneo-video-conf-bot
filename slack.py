@@ -9,6 +9,7 @@ __license__ = "OSL 3.0"
 
 
 class Slack:
+    __user_id = ''
     __token = ''
     __message_pattern = ''
     __target_channel = ''
@@ -19,6 +20,7 @@ class Slack:
     STATUS_ERROR = 'error'
 
     def __init__(self, config):
+        self.__user_id = config.BOT_ID
         self.__token = config.BOT_TOKEN
         self.__message_pattern = config.MESSAGE_PATTERN
         self.__target_channel = config.VIDEO_CONF_CHANNEL
@@ -50,16 +52,35 @@ class Slack:
             self.__last_error = result['error']
             return self.STATUS_ERROR
 
-    def channels_list(self):
+    def get_channels_list(self):
         sc = SlackClient(self.__token)
 
         result = sc.api_call(
-            "channels.list",
+            "users.info",
             exclude_archived=1,
             exclude_members=1
         )
 
-        return result
+        channels = []
+        for channel in result['channels']:
+            channels.append("#" + channel['name'])
+
+        return channels
+
+    def get_my_channels(self):
+        sc = SlackClient(self.__token)
+
+        result = sc.api_call(
+            "channels.list",
+            exclude_archived=1
+        )
+
+        channels = []
+        for channel in result['channels']:
+            if self.__user_id in channel['members']:
+                channels.append("#" + channel['name'])
+
+        return channels
 
     @staticmethod
     def is_valid_zoom_id(zoom_id: str):
