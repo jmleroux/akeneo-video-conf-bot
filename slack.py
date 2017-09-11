@@ -29,7 +29,7 @@ class Slack:
     def get_last_error(self):
         return self.__last_error
 
-    def send_message(self, message: str):
+    def send_message(self, message: str, channel: str):
 
         if not self.is_valid_zoom_id(message):
             return self.STATUS_INVALID_FORMAT
@@ -38,7 +38,7 @@ class Slack:
 
         result = sc.api_call(
             "chat.postMessage",
-            channel=self.__target_channel,
+            channel=channel,
             text=self.__message_pattern % message,
             as_user=True
         )
@@ -49,6 +49,17 @@ class Slack:
         else:
             self.__last_error = result['error']
             return self.STATUS_ERROR
+
+    def channels_list(self):
+        sc = SlackClient(self.__token)
+
+        result = sc.api_call(
+            "channels.list",
+            exclude_archived=1,
+            exclude_members=1
+        )
+
+        return result
 
     @staticmethod
     def is_valid_zoom_id(zoom_id: str):

@@ -36,7 +36,11 @@ def send_to_slack(zoom_id: str):
     status_bar = builder.get_object("status_bar")
 
     slack = Slack(config)
-    status = slack.send_message(zoom_id)
+    combo_channels = builder.get_object("combo_channels")
+    index = combo_channels.get_active()
+    model = combo_channels.get_model()
+    channel = model[index][0]
+    status = slack.send_message(zoom_id, channel)
 
     if slack.STATUS_SENT == status:
         builder.get_object("status_bar")
@@ -46,6 +50,27 @@ def send_to_slack(zoom_id: str):
     else:
         error = slack.get_last_error()
         status_bar.set_property("label", "Error when sending message: %s" % error)
+
+
+def list_channels():
+    slack = Slack(config)
+    result = slack.channels_list()
+    channels = []
+    for channel in result['channels']:
+        channels.append("#" + channel['name'])
+    return channels
+
+
+def build_channels_combo():
+    combo_channels = builder.get_object("combo_channels")
+    name_store = builder.get_object("store_channels")
+    active_index = 0
+    for key, channel_name in enumerate(list_channels()):
+        name_store.append([channel_name])
+        if config.VIDEO_CONF_CHANNEL == channel_name:
+            active_index = key
+
+    combo_channels.set_active(active_index)
 
 
 lock_file = "var/zoom2slack.run"
@@ -59,6 +84,7 @@ else:
 
 builder = Gtk.Builder()
 builder.add_from_file("ui.glade")
+build_channels_combo()
 builder.connect_signals(Handler())
 
 window = builder.get_object("root_window")
