@@ -85,6 +85,4 @@ class Slack:
     @staticmethod
     def is_valid_zoom_id(zoom_id: str):
         match = re.search('^[0-9]{3}-?[0-9]{3}-?[0-9]{3}$', zoom_id, flags=re.IGNORECASE)
-        if match is not None:
-            return True
-        return False
+        return match is not None
