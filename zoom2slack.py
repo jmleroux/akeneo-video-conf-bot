@@ -4,10 +4,11 @@
 import os.path
 import gi
 import config as config
-from slack import Slack
 
+from slack import Slack
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+
 
 __author__ = "JM Leroux <jmleroux.pro@gmail.com"
 __license__ = "OSL 3.0"
@@ -21,13 +22,7 @@ class Handler:
 
     @staticmethod
     def on_send(button):
-        input_field = builder.get_object("input_field")
-        zoom_id = input_field.get_property("text")
-
-        if '' != zoom_id:
-            send_to_slack(zoom_id)
-        else:
-            set_status_bar_message("Empty Zoom ID")
+        send_to_slack()
 
     @staticmethod
     def on_delete_messages(button):
@@ -53,7 +48,7 @@ def delete_messages():
     status = slack.delete_messages(channel)
 
     if slack.STATUS_OK == status:
-        message = "Messages deleted from channel %s" % (channel)
+        message = "Messages deleted from channel %s" % channel
     else:
         error = slack.get_last_error()
         message = "Error when deleting messages: %s" % error
@@ -61,22 +56,38 @@ def delete_messages():
     set_status_bar_message(message)
 
 
-def send_to_slack(zoom_id: str):
+def send_to_slack():
+    input_field = builder.get_object("input_field")
+    zoom_id = input_field.get_property("text")
+
     channel = get_selected_channel()
 
     slack = Slack(config)
-    status = slack.send_message(zoom_id, channel)
 
-    if slack.STATUS_SENT == status:
-        message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
-        reset_input()
-    elif slack.STATUS_INVALID_FORMAT == status:
+    if not zoom_id:
+        message = "Empty Zoom ID"
+    elif not is_valid_input(zoom_id):
         message = "Invalid Zoom ID"
     else:
-        error = slack.get_last_error()
-        message = "Error when sending message: %s" % error
+        status = slack.send_message(zoom_id, channel)
+
+        if slack.STATUS_SENT == status:
+            message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
+            reset_input()
+        else:
+            error = slack.get_last_error()
+            message = "Error when sending message: %s" % error
 
     set_status_bar_message(message)
+
+
+def is_valid_input(zoom_id: str):
+    if not zoom_id:
+        return False
+
+    return True
+    # match = re.search('^[0-9]{3}-?[0-9]{3}-?[0-9]{3}$', zoom_id, flags=re.IGNORECASE)
+    # return match is not None
 
 
 def reset_input():
@@ -94,9 +105,11 @@ def build_channels_combo():
     combo_channels = builder.get_object("combo_channels")
     name_store = builder.get_object("store_channels")
     active_index = 0
-    for key, channel_name in enumerate(list_channels()):
-        name_store.append([channel_name])
-        if config.VIDEO_CONF_CHANNEL == channel_name:
+    for key, channel in enumerate(list_channels()):
+        name_store.append([
+            channel['name']
+        ])
+        if config.VIDEO_CONF_CHANNEL == channel['name']:
             active_index = key
 
     combo_channels.set_active(active_index)
