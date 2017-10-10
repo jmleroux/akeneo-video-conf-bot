@@ -27,25 +27,54 @@ class Handler:
         if '' != zoom_id:
             send_to_slack(zoom_id)
         else:
-            status_bar = builder.get_object("status_bar")
-            status_bar.set_property("label", "Empty Zoom ID")
+            set_status_bar_message("Empty Zoom ID")
+
+
+def get_selected_channel():
+    combo_channels = builder.get_object("combo_channels")
+    index = combo_channels.get_active()
+    model = combo_channels.get_model()
+    return model[index][0]
+
+
+def set_status_bar_message(message: str):
+    status_bar = builder.get_object("status_bar")
+    status_bar.set_property("label", message)
 
 
 def send_to_slack(zoom_id: str):
-    message = "Zoom ID %s sent to channel %s" % (zoom_id, config.VIDEO_CONF_CHANNEL)
-    status_bar = builder.get_object("status_bar")
+    channel = get_selected_channel()
 
     slack = Slack(config)
-    status = slack.send_message(zoom_id)
+    status = slack.send_message(zoom_id, channel)
 
     if slack.STATUS_SENT == status:
-        builder.get_object("status_bar")
-        status_bar.set_property("label", message)
+        message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
     elif slack.STATUS_INVALID_FORMAT == status:
-        status_bar.set_property("label", "Invalid Zoom ID")
+        message = "Invalid Zoom ID"
     else:
         error = slack.get_last_error()
-        status_bar.set_property("label", "Error when sending message: %s" % error)
+        message = "Error when sending message: %s" % error
+
+    set_status_bar_message(message)
+
+
+def list_channels():
+    slack = Slack(config)
+    channels = slack.get_my_channels()
+    return channels
+
+
+def build_channels_combo():
+    combo_channels = builder.get_object("combo_channels")
+    name_store = builder.get_object("store_channels")
+    active_index = 0
+    for key, channel_name in enumerate(list_channels()):
+        name_store.append([channel_name])
+        if config.VIDEO_CONF_CHANNEL == channel_name:
+            active_index = key
+
+    combo_channels.set_active(active_index)
 
 
 lock_file = "var/zoom2slack.run"
@@ -59,6 +88,7 @@ else:
 
 builder = Gtk.Builder()
 builder.add_from_file("ui.glade")
+build_channels_combo()
 builder.connect_signals(Handler())
 
 window = builder.get_object("root_window")

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 BOT_TOKEN = "the-bot-token"
+BOT_ID = "bot_id"
 VIDEO_CONF_CHANNEL = "#the-channel"
 MESSAGE_PATTERN = '''
 Zoom ID for the next Friday event
