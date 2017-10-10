@@ -114,6 +114,23 @@
                                 <property name="position">2</property>
                             </packing>
                         </child>
+                        <child>
+                            <object class="GtkButton" id="btn_delete">
+                                <property name="label" translatable="yes">Clear messages</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="halign">center</property>
+                                <property name="valign">center</property>
+                                <property name="yalign">0.52999997138977051</property>
+                                <signal name="clicked" handler="on_delete_messages" swapped="no"/>
+                            </object>
+                            <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                            </packing>
+                        </child>
                     </object>
                     <packing>
                         <property name="expand">False</property>

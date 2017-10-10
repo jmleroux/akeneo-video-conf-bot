@@ -29,6 +29,10 @@ class Handler:
         else:
             set_status_bar_message("Empty Zoom ID")
 
+    @staticmethod
+    def on_delete_messages(button):
+        delete_messages()
+
 
 def get_selected_channel():
     combo_channels = builder.get_object("combo_channels")
@@ -40,6 +44,21 @@ def get_selected_channel():
 def set_status_bar_message(message: str):
     status_bar = builder.get_object("status_bar")
     status_bar.set_property("label", message)
+
+
+def delete_messages():
+    channel = get_selected_channel()
+
+    slack = Slack(config)
+    status = slack.delete_messages(channel)
+
+    if slack.STATUS_OK == status:
+        message = "Messages deleted from channel %s" % (channel)
+    else:
+        error = slack.get_last_error()
+        message = "Error when deleting messages: %s" % error
+
+    set_status_bar_message(message)
 
 
 def send_to_slack(zoom_id: str):
