@@ -69,6 +69,7 @@ def send_to_slack(zoom_id: str):
 
     if slack.STATUS_SENT == status:
         message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
+        reset_input()
     elif slack.STATUS_INVALID_FORMAT == status:
         message = "Invalid Zoom ID"
     else:
@@ -76,6 +77,11 @@ def send_to_slack(zoom_id: str):
         message = "Error when sending message: %s" % error
 
     set_status_bar_message(message)
+
+
+def reset_input():
+    input_field = builder.get_object("input_field")
+    input_field.set_text("")
 
 
 def list_channels():
