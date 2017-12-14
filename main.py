@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os.path
 import gi
 import config as config
 
@@ -17,7 +16,6 @@ __license__ = "OSL 3.0"
 class Handler:
     @staticmethod
     def on_close_window(*args):
-        os.remove(lock_file)
         Gtk.main_quit(*args)
 
     @staticmethod
@@ -114,15 +112,6 @@ def build_channels_combo():
 
     combo_channels.set_active(active_index)
 
-
-lock_file = "var/zoom2slack.run"
-if os.path.isfile(lock_file):
-    print("Instance already running")
-    exit(0)
-else:
-    lock_handle = open(lock_file, 'w')
-    lock_handle.write('1')
-    lock_handle.close()
 
 builder = Gtk.Builder()
 builder.add_from_file("ui.glade")
