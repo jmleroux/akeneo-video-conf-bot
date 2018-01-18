@@ -1,3 +1,4 @@
 config.py
 var
 !var/.gitkeep
+__pycache__
