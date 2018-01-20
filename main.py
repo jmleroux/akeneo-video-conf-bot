@@ -31,24 +31,24 @@ class AppWindow(object):
 
         # Read GUI from file and retrieve objects from Gtk.Builder
         try:
-            builder = Gtk.Builder.new_from_file("ui.glade")
-            self.build_channels_combo(builder)
-            builder.connect_signals(self)
+            self.builder = Gtk.Builder.new_from_file("ui.glade")
+            self.build_channels_combo()
+            self.builder.connect_signals(self)
         except GObject.GError:
             print("Error reading GUI file")
             raise
 
         # Fire up the main window
-        self.MainWindow = builder.get_object("root_window")
+        self.MainWindow = self.builder.get_object("root_window")
         self.MainWindow.set_application(application)
         self.MainWindow.show()
 
     def close(self, *args):
         self.MainWindow.destroy()
 
-    def build_channels_combo(self, builder):
-        combo_channels = builder.get_object("combo_channels")
-        name_store = builder.get_object("store_channels")
+    def build_channels_combo(self):
+        combo_channels = self.builder.get_object("combo_channels")
+        name_store = self.builder.get_object("store_channels")
         active_index = 0
         for key, channel in enumerate(self.list_channels()):
             name_store.append([
@@ -59,18 +59,18 @@ class AppWindow(object):
 
         combo_channels.set_active(active_index)
 
-    def get_selected_channel(self, builder):
-        combo_channels = builder.get_object("combo_channels")
+    def get_selected_channel(self):
+        combo_channels = self.builder.get_object("combo_channels")
         index = combo_channels.get_active()
         model = combo_channels.get_model()
         return model[index][0]
 
-    def set_status_bar_message(self, builder, message: str):
-        status_bar = builder.get_object("status_bar")
+    def set_status_bar_message(self, message: str):
+        status_bar = self.builder.get_object("status_bar")
         status_bar.set_property("label", message)
 
-    def delete_messages(self, builder):
-        channel = self.get_selected_channel(builder)
+    def delete_messages(self):
+        channel = self.get_selected_channel()
 
         slack = Slack(config)
         status = slack.delete_messages(channel)
@@ -83,11 +83,11 @@ class AppWindow(object):
 
         self.set_status_bar_message(message)
 
-    def send_to_slack(self, builder):
-        input_field = builder.get_object("input_field")
+    def send_to_slack(self):
+        input_field = self.builder.get_object("input_field")
         zoom_id = input_field.get_property("text")
 
-        channel = self.get_selected_channel(builder)
+        channel = self.get_selected_channel()
 
         slack = Slack(config)
 
@@ -113,8 +113,8 @@ class AppWindow(object):
 
         return True
 
-    def reset_input(self, builder):
-        input_field = builder.get_object("input_field")
+    def reset_input(self):
+        input_field = self.builder.get_object("input_field")
         input_field.set_text("")
 
     def list_channels(self):
@@ -122,8 +122,8 @@ class AppWindow(object):
         channels = slack.get_my_channels()
         return channels
 
-    def on_close_window(*args):
-        Gtk.main_quit(*args)
+    def on_close_window(self, *args):
+        self.close(*args)
 
     def on_send(self, button):
         self.send_to_slack()
