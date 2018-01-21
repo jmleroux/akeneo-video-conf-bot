@@ -15,6 +15,7 @@ __license__ = "OSL 3.0"
 
 
 class MyApplication(Gtk.Application):
+
     def __init__(self, application_id, flags):
         Gtk.Application.__init__(self, application_id=application_id, flags=flags)
 
@@ -27,6 +28,5 @@ class MyApplication(Gtk.Application):
 def main():
     application = MyApplication("jmleroux.zoom2slack", Gio.ApplicationFlags.FLAGS_NONE)
     application.run()
-
 
 if __name__ == "__main__": main()

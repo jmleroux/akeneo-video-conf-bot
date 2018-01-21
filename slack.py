@@ -24,10 +24,10 @@ class Slack:
     __channels = []
 
     def __init__(self, config):
-        self.__user_id = config.BOT_ID
-        self.__token = config.BOT_TOKEN
-        self.__message_pattern = config.MESSAGE_PATTERN
-        self.__target_channel = config.VIDEO_CONF_CHANNEL
+        self.__user_id = config['bot_id']
+        self.__token = config['bot_token']
+        self.__message_pattern = config['message_pattern']
+        self.__target_channel = config['default_channel']
         self.__slack_client = SlackClient(self.__token)
 
     def get_channel(self):

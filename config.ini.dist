@@ -1,0 +1,5 @@
+[DEFAULT]
+bot_token = the-bot-token
+bot_id = bot_id
+default_channel = my_channel
+message_pattern = :clapper:   Join us on Zoom  %s  :clapper:

@@ -3,7 +3,7 @@
 # noqa: E402
 
 import gi
-import config as config
+import configparser
 
 gi.require_version('Gdk', '3.0')
 gi.require_version('Gtk', '3.0')
@@ -18,6 +18,9 @@ __license__ = "OSL 3.0"
 
 
 class AppWindow(Gtk.ApplicationWindow):
+
+    CONFIG_FILENAME = 'config.ini'
+
     def __init__(self, application):
         self.Application = application
 
@@ -38,14 +41,16 @@ class AppWindow(Gtk.ApplicationWindow):
     def build_channels_combo(self):
         combo_channels = self.builder.get_object("combo_channels")
         name_store = self.builder.get_object("store_channels")
-        slack = Slack(config)
+        config = configparser.ConfigParser()
+        config.read(self.CONFIG_FILENAME)
+        slack = Slack(config['DEFAULT'])
         channels = slack.get_my_channels()
         active_index = 0
         for key, channel in enumerate(channels):
             name_store.append([
                 channel['name']
             ])
-            if config.VIDEO_CONF_CHANNEL == channel['name']:
+            if config['DEFAULT']['default_channel'] == channel['name']:
                 active_index = key
 
         combo_channels.set_active(active_index)
@@ -85,7 +90,9 @@ class AppWindow(Gtk.ApplicationWindow):
 
         channel = self.get_selected_channel()
 
-        slack = Slack(config)
+        config = configparser.ConfigParser()
+        config.read(self.CONFIG_FILENAME)
+        slack = Slack(config['DEFAULT'])
 
         if not zoom_id:
             message = "Empty Zoom ID"
@@ -109,7 +116,9 @@ class AppWindow(Gtk.ApplicationWindow):
         message = "Deleting from channel %s" % channel
         self.set_status_bar_message(message)
 
-        slack = Slack(config)
+        config = configparser.ConfigParser()
+        config.read(self.CONFIG_FILENAME)
+        slack = Slack(config['DEFAULT'])
         status = slack.delete_messages(channel)
 
         if slack.STATUS_OK == status:
