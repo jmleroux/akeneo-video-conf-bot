@@ -15,14 +15,14 @@ __license__ = "OSL 3.0"
 
 
 class MyApplication(Gtk.Application):
-    # Main initialization routine
     def __init__(self, application_id, flags):
         Gtk.Application.__init__(self, application_id=application_id, flags=flags)
-        self.connect("activate", self.new_window)
 
-    def new_window(self, *args):
+    def do_activate(self):
         AppWindow(self)
 
+    def do_startup(self):
+        Gtk.Application.do_startup(self)
 
 def main():
     application = MyApplication("jmleroux.zoom2slack", Gio.ApplicationFlags.FLAGS_NONE)
