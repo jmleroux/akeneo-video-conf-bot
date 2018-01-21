@@ -46,7 +46,8 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         field.set_text(config['DEFAULT']['DEFAULT_CHANNEL'])
         field = self.builder.get_object("input_message_pattern")
         text_buffer = field.get_buffer()
-        text_buffer.set_text(config['DEFAULT']['message_pattern'])
+        message_pattern = config['DEFAULT']['message_pattern'].replace('%', '%%')
+        text_buffer.set_text(message_pattern)
 
     def save_config_file(self):
         config = configparser.ConfigParser()
