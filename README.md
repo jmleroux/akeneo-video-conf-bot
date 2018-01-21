@@ -47,13 +47,15 @@ Message sent:
 
 ![Sent](doc/img/sent_to_channel.png)
 
-Invalid format:
+Configuration window:
 
-![Invalid ID](doc/img/invalid_zoom_id.png)
+![Sent](doc/img/configuration.png)
 
-Error:
+## Demo:
 
-![Error](doc/img/system_error.png)
+[MP4 video](doc/demo.mp4)
+
+<video src="doc/demo.mp4" width="320" height="200" controls preload></video>
 
 ### Resources:
 

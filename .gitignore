@@ -1,4 +1,5 @@
 config.py
+config.ini
 var
 !var/.gitkeep
 __pycache__
