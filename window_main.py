@@ -4,13 +4,14 @@
 
 import gi
 import config as config
-import time
 
 gi.require_version('Gdk', '3.0')
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import GObject, Gio, Gdk, Gtk
 from slack import Slack
+from window_config import ConfigurationWindow
+
 
 __author__ = "JM Leroux <jmleroux.pro@gmail.com"
 __license__ = "OSL 3.0"
@@ -127,3 +128,6 @@ class AppWindow(Gtk.ApplicationWindow):
         self.build_channels_combo()
         message = "Channels reloaded"
         self.set_status_bar_message(message)
+
+    def on_configuration_click(self, button):
+        ConfigurationWindow(self.Application)
