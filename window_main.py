@@ -64,6 +64,10 @@ class AppWindow(Gtk.ApplicationWindow):
         input_field = self.builder.get_object("input_field")
         input_field.set_text("")
 
+    def switch_image(self, image_name):
+        image_field = self.builder.get_object("image1")
+        image_field.set_from_file('img/' + image_name)
+
     # ---------------------------------------------------------------------------------
     # handlers
     # ---------------------------------------------------------------------------------
@@ -90,6 +94,7 @@ class AppWindow(Gtk.ApplicationWindow):
             if slack.STATUS_SENT == status:
                 message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
                 self.reset_input()
+                self.switch_image('mutenroshi_02.png')
             else:
                 error = slack.get_last_error()
                 message = "Error when sending message: %s" % error
@@ -97,6 +102,7 @@ class AppWindow(Gtk.ApplicationWindow):
         self.set_status_bar_message(message)
 
     def on_delete_messages(self, button):
+        self.switch_image('mutenroshi_01.png')
         channel = self.get_selected_channel()
 
         message = "Deleting from channel %s" % channel
@@ -114,6 +120,7 @@ class AppWindow(Gtk.ApplicationWindow):
         self.set_status_bar_message(message)
 
     def on_reload_channels(self, button):
+        self.switch_image('mutenroshi_01.png')
         message = "Reloading channels"
         self.set_status_bar_message(message)
         self.builder.get_object("combo_channels").get_model().clear()

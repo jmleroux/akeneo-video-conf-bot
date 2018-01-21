@@ -21,7 +21,7 @@
           <object class="GtkImage" id="image1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">img/Mutenroshi.png</property>
+            <property name="pixbuf">img/mutenroshi_01.png</property>
           </object>
           <packing>
             <property name="expand">False</property>
