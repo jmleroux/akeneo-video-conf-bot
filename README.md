@@ -47,14 +47,6 @@ Message sent:
 
 ![Sent](doc/img/sent_to_channel.png)
 
-Invalid format:
-
-![Invalid ID](doc/img/invalid_zoom_id.png)
-
-Error:
-
-![Error](doc/img/system_error.png)
-
 ### Resources:
 
 * https://github.com/slackapi/python-slackclient
