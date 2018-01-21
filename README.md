@@ -51,6 +51,8 @@ Message sent:
 
 [MP4 video](doc/demo.mp4)
 
+<video src="doc/demo.mp4" width="320" height="200" controls preload></video>
+
 ### Resources:
 
 * https://github.com/slackapi/python-slackclient
