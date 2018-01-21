@@ -12,7 +12,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkGrid" id="grid1">
+          <object class="GtkGrid" id="input_grid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">5</property>
@@ -33,6 +33,46 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_bot_id">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="opacity">0.96999999999999997</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Bot ID</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_default_channel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Default channel</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_message_pattern">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Message pattern</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">3</property>
               </packing>
             </child>
             <child>
@@ -81,30 +121,15 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label_bot_id">
+              <object class="GtkTextView" id="input_message_pattern">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="opacity">0.96999999999999997</property>
-                <property name="halign">end</property>
-                <property name="margin_right">10</property>
-                <property name="label" translatable="yes">Bot ID</property>
+                <property name="can_focus">True</property>
+                <property name="top_margin">1</property>
+                <property name="input_purpose">alpha</property>
               </object>
               <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="label_default_channel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">end</property>
-                <property name="margin_right">10</property>
-                <property name="label" translatable="yes">Default channel</property>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="left_attach">1</property>
+                <property name="top_attach">3</property>
               </packing>
             </child>
           </object>

@@ -44,6 +44,9 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         field.set_text(config['DEFAULT']['BOT_ID'])
         field = self.builder.get_object("input_default_channel")
         field.set_text(config['DEFAULT']['DEFAULT_CHANNEL'])
+        field = self.builder.get_object("input_message_pattern")
+        text_buffer = field.get_buffer()
+        text_buffer.set_text(config['DEFAULT']['message_pattern'])
 
     def save_config_file(self):
         config = configparser.ConfigParser()
@@ -54,6 +57,9 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         config['DEFAULT']['BOT_ID'] = field.get_text()
         field = self.builder.get_object("input_default_channel")
         config['DEFAULT']['DEFAULT_CHANNEL'] = field.get_text()
+        field = self.builder.get_object("input_message_pattern")
+        text_buffer = field.get_buffer()
+        config['DEFAULT']['message_pattern'] = text_buffer.get_text(*text_buffer.get_bounds(), include_hidden_chars=False)
         with open(self.CONFIG_FILENAME, 'w') as configfile:
             config.write(configfile)
 
