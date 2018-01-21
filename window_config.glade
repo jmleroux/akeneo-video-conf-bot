@@ -63,6 +63,19 @@
               </packing>
             </child>
             <child>
+              <object class="GtkLabel" id="label_channel_list">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Channel list</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkLabel" id="label_message_pattern">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -72,7 +85,7 @@
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">3</property>
+                <property name="top_attach">4</property>
               </packing>
             </child>
             <child>
@@ -121,15 +134,31 @@
               </packing>
             </child>
             <child>
-              <object class="GtkTextView" id="input_message_pattern">
+              <object class="GtkEntry" id="input_channel_list">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="top_margin">1</property>
-                <property name="input_purpose">alpha</property>
+                <property name="valign">center</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
+                <property name="max_width_chars">70</property>
+                <property name="placeholder_text" translatable="yes">CHANNEL LIST</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkTextView" id="input_message_pattern">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="top_margin">1</property>
+                <property name="margin_bottom">5</property>
+                <property name="input_purpose">alpha</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">4</property>
               </packing>
             </child>
           </object>

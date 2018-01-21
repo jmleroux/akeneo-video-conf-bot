@@ -30,7 +30,6 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
             print("Error reading GUI file")
             raise
 
-        # Fire up the main window
         self.MainWindow = self.builder.get_object("config_window")
         self.MainWindow.set_application(application)
         self.MainWindow.show()
@@ -39,11 +38,13 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         config = configparser.ConfigParser()
         config.read(self.CONFIG_FILENAME)
         field = self.builder.get_object("input_bot_token")
-        field.set_text(config['DEFAULT']['BOT_TOKEN'])
+        field.set_text(config['DEFAULT']['bot_token'])
         field = self.builder.get_object("input_bot_id")
-        field.set_text(config['DEFAULT']['BOT_ID'])
+        field.set_text(config['DEFAULT']['bot_id'])
+        field = self.builder.get_object("input_channel_list")
+        field.set_text(config['DEFAULT']['channel_list'])
         field = self.builder.get_object("input_default_channel")
-        field.set_text(config['DEFAULT']['DEFAULT_CHANNEL'])
+        field.set_text(config['DEFAULT']['default_channel'])
         field = self.builder.get_object("input_message_pattern")
         text_buffer = field.get_buffer()
         message_pattern = config['DEFAULT']['message_pattern'].replace('%', '%%')
@@ -56,6 +57,8 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         config['DEFAULT']['BOT_TOKEN'] = field.get_text()
         field = self.builder.get_object("input_bot_id")
         config['DEFAULT']['BOT_ID'] = field.get_text()
+        field = self.builder.get_object("input_channel_list")
+        config['DEFAULT']['channel_list'] = field.get_text()
         field = self.builder.get_object("input_default_channel")
         config['DEFAULT']['DEFAULT_CHANNEL'] = field.get_text()
         field = self.builder.get_object("input_message_pattern")
