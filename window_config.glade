@@ -4,7 +4,7 @@
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkWindow" id="config_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Akeneo Zoom2Slack - configuration</property>
+    <property name="title" translatable="yes">Configuration - Akeneo Zoom2Slack</property>
     <signal name="delete-event" handler="close" swapped="no"/>
     <child>
       <object class="GtkBox" id="box_main">
@@ -12,57 +12,106 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkEntry" id="input_bot_token">
+          <object class="GtkGrid" id="grid1">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="valign">center</property>
-            <property name="margin_left">20</property>
-            <property name="margin_right">20</property>
+            <property name="can_focus">False</property>
+            <property name="margin_left">5</property>
+            <property name="margin_right">5</property>
             <property name="margin_top">5</property>
             <property name="margin_bottom">5</property>
-            <property name="max_width_chars">45</property>
-            <property name="placeholder_text" translatable="yes">BOT_TOKEN</property>
+            <property name="row_spacing">5</property>
+            <property name="column_spacing">5</property>
+            <child>
+              <object class="GtkLabel" id="label_bot_token">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Bot token</property>
+                <property name="ellipsize">end</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="input_bot_token">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="valign">center</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
+                <property name="max_width_chars">45</property>
+                <property name="placeholder_text" translatable="yes">BOT_TOKEN</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="input_bot_id">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="valign">center</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
+                <property name="max_width_chars">11</property>
+                <property name="placeholder_text" translatable="yes">BOT_ID</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="input_default_channel">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="valign">center</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
+                <property name="max_width_chars">11</property>
+                <property name="placeholder_text" translatable="yes">DEFAULT_CHANNEL</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_bot_id">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="opacity">0.96999999999999997</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Bot ID</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_default_channel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="margin_right">10</property>
+                <property name="label" translatable="yes">Default channel</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="input_bot_id">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="valign">center</property>
-            <property name="margin_left">20</property>
-            <property name="margin_right">20</property>
-            <property name="margin_top">5</property>
-            <property name="margin_bottom">5</property>
-            <property name="max_width_chars">11</property>
-            <property name="placeholder_text" translatable="yes">BOT_ID</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="input_default_channel">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="valign">center</property>
-            <property name="margin_left">20</property>
-            <property name="margin_right">20</property>
-            <property name="margin_top">5</property>
-            <property name="margin_bottom">5</property>
-            <property name="max_width_chars">11</property>
-            <property name="placeholder_text" translatable="yes">DEFAULT_CHANNEL</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -70,10 +119,11 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">end</property>
-            <property name="margin_left">20</property>
-            <property name="margin_right">20</property>
+            <property name="margin_left">5</property>
+            <property name="margin_right">5</property>
             <property name="margin_top">10</property>
             <property name="margin_bottom">10</property>
+            <property name="spacing">5</property>
             <child>
               <object class="GtkButton" id="btn_ok">
                 <property name="label" translatable="yes">OK</property>

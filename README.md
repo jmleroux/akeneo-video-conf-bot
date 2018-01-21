@@ -47,6 +47,10 @@ Message sent:
 
 ![Sent](doc/img/sent_to_channel.png)
 
+Configuration window:
+
+![Sent](doc/img/configuration.png)
+
 ## Demo:
 
 [MP4 video](doc/demo.mp4)
