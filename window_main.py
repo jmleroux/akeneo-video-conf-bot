@@ -43,14 +43,15 @@ class AppWindow(Gtk.ApplicationWindow):
         name_store = self.builder.get_object("store_channels")
         config = configparser.ConfigParser()
         config.read(self.CONFIG_FILENAME)
-        slack = Slack(config['DEFAULT'])
-        channels = slack.get_my_channels()
+        # slack = Slack(config['DEFAULT'])
+        # channels = slack.get_my_channels()
+        channels = config['DEFAULT']['channel_list'].split(",")
         active_index = 0
         for key, channel in enumerate(channels):
             name_store.append([
-                channel['name']
+                channel
             ])
-            if config['DEFAULT']['default_channel'] == channel['name']:
+            if config['DEFAULT']['default_channel'] == channel:
                 active_index = key
 
         combo_channels.set_active(active_index)
