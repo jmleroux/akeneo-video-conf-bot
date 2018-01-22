@@ -30,7 +30,7 @@ cd akeneo-video-conf-bot
 # Usage
 
 ```
-python3 zoom2slack.py
+python3 main.py
 ```
 
 Or with the executable shell launcher:

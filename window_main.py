@@ -85,22 +85,22 @@ class AppWindow(Gtk.ApplicationWindow):
 
     def on_send(self, button):
         input_field = self.builder.get_object("input_field")
-        zoom_id = input_field.get_property("text")
+        slack_message = input_field.get_property("text")
 
         channel = self.get_selected_channel()
 
         slack = self.__get_slack_client()
 
-        if not zoom_id:
-            message = "Empty Zoom ID"
+        if not slack_message:
+            message = "Empty message"
         else:
             config = configparser.ConfigParser()
             config.read(self.CONFIG_FILENAME)
             pattern = config['DEFAULT']['message_pattern']
-            status = slack.send_message(pattern % zoom_id, channel)
+            status = slack.send_message(pattern % slack_message, channel)
 
             if slack.STATUS_SENT == status:
-                message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
+                message = 'Message "%s" sent to channel "%s"' % (slack_message, channel)
                 self.reset_input()
                 self.switch_image('mutenroshi_02.png')
             else:
