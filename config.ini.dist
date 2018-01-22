@@ -3,4 +3,4 @@ bot_token = the-bot-token
 bot_id = bot_id
 channel_list = channel1,channel2,channel3
 default_channel = channel2
-message_pattern = :clapper:   Join us on Zoom  %s  :clapper:
+message_pattern = :clapper: Join us on Zoom  %%s  :clapper:
