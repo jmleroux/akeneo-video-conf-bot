@@ -3,35 +3,26 @@
 
 from slackclient import SlackClient
 
-
 __author__ = "JM Leroux <jmleroux.pro@gmail.com"
 __license__ = "OSL 3.0"
 
 
 class Slack:
-    __user_id = ''
-    __token = ''
-    __message_pattern = ''
-    __target_channel = ''
-    __last_error = ''
 
     STATUS_OK = 'ok'
     STATUS_SENT = 'sent'
     STATUS_ERROR = 'error'
 
+    __user_id = ''
+    __token = ''
+    __last_error = ''
     __slack_client = None
-
     __channels = []
 
-    def __init__(self, config):
-        self.__user_id = config['bot_id']
-        self.__token = config['bot_token']
-        self.__message_pattern = config['message_pattern']
-        self.__target_channel = config['default_channel']
+    def __init__(self, user_id: str, bot_token: str):
+        self.__user_id = user_id
+        self.__token = bot_token
         self.__slack_client = SlackClient(self.__token)
-
-    def get_channel(self):
-        return self.__target_channel
 
     def get_last_error(self):
         return self.__last_error
@@ -59,7 +50,7 @@ class Slack:
         result = self.__slack_client.api_call(
             "chat.postMessage",
             channel=channel,
-            text=self.__message_pattern % message,
+            text=message,
             as_user=True
         )
 

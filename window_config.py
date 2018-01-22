@@ -34,9 +34,17 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         self.MainWindow.set_application(application)
         self.MainWindow.show()
 
-    def load_config_file(self):
+    def __get_config_from_file(self):
         config = configparser.ConfigParser()
         config.read(self.CONFIG_FILENAME)
+        return config
+
+    def __save_config_to_file(self, config):
+        with open(self.CONFIG_FILENAME, 'w') as configfile:
+            config.write(configfile)
+
+    def load_config_file(self):
+        config = self.__get_config_from_file()
         field = self.builder.get_object("input_bot_token")
         field.set_text(config['DEFAULT']['bot_token'])
         field = self.builder.get_object("input_bot_id")
@@ -51,8 +59,7 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         text_buffer.set_text(message_pattern)
 
     def save_config_file(self):
-        config = configparser.ConfigParser()
-        config.read(self.CONFIG_FILENAME)
+        config = self.__get_config_from_file()
         field = self.builder.get_object("input_bot_token")
         config['DEFAULT']['BOT_TOKEN'] = field.get_text()
         field = self.builder.get_object("input_bot_id")
@@ -64,8 +71,7 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         field = self.builder.get_object("input_message_pattern")
         text_buffer = field.get_buffer()
         config['DEFAULT']['message_pattern'] = text_buffer.get_text(*text_buffer.get_bounds(), include_hidden_chars=False)
-        with open(self.CONFIG_FILENAME, 'w') as configfile:
-            config.write(configfile)
+        self.__save_config_to_file(config)
 
     def set_status_bar_message(self, message: str):
         status_bar = self.builder.get_object("status_bar")

@@ -43,8 +43,6 @@ class AppWindow(Gtk.ApplicationWindow):
         name_store = self.builder.get_object("store_channels")
         config = configparser.ConfigParser()
         config.read(self.CONFIG_FILENAME)
-        # slack = Slack(config['DEFAULT'])
-        # channels = slack.get_my_channels()
         channels = config['DEFAULT']['channel_list'].split(",")
         active_index = 0
         for key, channel in enumerate(channels):
@@ -91,14 +89,15 @@ class AppWindow(Gtk.ApplicationWindow):
 
         channel = self.get_selected_channel()
 
-        config = configparser.ConfigParser()
-        config.read(self.CONFIG_FILENAME)
-        slack = Slack(config['DEFAULT'])
+        slack = self.__get_slack_client()
 
         if not zoom_id:
             message = "Empty Zoom ID"
         else:
-            status = slack.send_message(zoom_id, channel)
+            config = configparser.ConfigParser()
+            config.read(self.CONFIG_FILENAME)
+            pattern = config['DEFAULT']['message_pattern']
+            status = slack.send_message(pattern % zoom_id, channel)
 
             if slack.STATUS_SENT == status:
                 message = "Zoom ID %s sent to channel %s" % (zoom_id, channel)
@@ -117,9 +116,7 @@ class AppWindow(Gtk.ApplicationWindow):
         message = "Deleting from channel %s" % channel
         self.set_status_bar_message(message)
 
-        config = configparser.ConfigParser()
-        config.read(self.CONFIG_FILENAME)
-        slack = Slack(config['DEFAULT'])
+        slack = self.__get_slack_client()
         status = slack.delete_messages(channel)
 
         if slack.STATUS_OK == status:
@@ -141,3 +138,8 @@ class AppWindow(Gtk.ApplicationWindow):
 
     def on_configuration_click(self, button):
         ConfigurationWindow(self.Application)
+
+    def __get_slack_client(self):
+        config = configparser.ConfigParser()
+        config.read(self.CONFIG_FILENAME)
+        return Slack(config['DEFAULT']['bot_id'], config['DEFAULT']['bot_token'])
