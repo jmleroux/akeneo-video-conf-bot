@@ -30,20 +30,53 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="input_field">
+          <object class="GtkBox" id="box1">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="valign">center</property>
+            <property name="can_focus">False</property>
             <property name="margin_left">20</property>
             <property name="margin_right">20</property>
-            <property name="margin_top">20</property>
-            <property name="margin_bottom">20</property>
-            <property name="max_width_chars">11</property>
+            <property name="margin_top">10</property>
+            <property name="margin_bottom">10</property>
+            <property name="spacing">1</property>
+            <child>
+              <object class="GtkEntry" id="input_field">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="valign">center</property>
+                <property name="margin_top">20</property>
+                <property name="margin_bottom">20</property>
+                <property name="max_width_chars">60</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_send">
+                <property name="label" translatable="yes">Send 2 Slack</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="xalign">0.46000000834465027</property>
+                <property name="image_position">top</property>
+                <signal name="clicked" handler="on_send" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -55,6 +88,7 @@
             <property name="margin_right">20</property>
             <property name="margin_top">10</property>
             <property name="margin_bottom">10</property>
+            <property name="spacing">2</property>
             <child>
               <object class="GtkComboBox" id="combo_channels">
                 <property name="visible">True</property>
@@ -91,24 +125,6 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_send">
-                <property name="label" translatable="yes">Send 2 Slack</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="xalign">0.46000000834465027</property>
-                <property name="image_position">top</property>
-                <signal name="clicked" handler="on_send" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="btn_delete">
                 <property name="label" translatable="yes">Clear messages</property>
                 <property name="visible">True</property>
@@ -122,7 +138,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">3</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -173,7 +189,6 @@
             <property name="halign">center</property>
             <property name="orientation">vertical</property>
             <property name="spacing">2</property>
-            <!--<signal name="text-pushed" handler="on_status_message" swapped="no"/>-->
           </object>
           <packing>
             <property name="expand">False</property>
