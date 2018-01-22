@@ -15,7 +15,6 @@ __license__ = "OSL 3.0"
 
 
 class ConfigurationWindow(Gtk.ApplicationWindow):
-
     CONFIG_FILENAME = 'config.ini'
 
     def __init__(self, application):
@@ -70,7 +69,10 @@ class ConfigurationWindow(Gtk.ApplicationWindow):
         config['DEFAULT']['DEFAULT_CHANNEL'] = field.get_text()
         field = self.builder.get_object("input_message_pattern")
         text_buffer = field.get_buffer()
-        config['DEFAULT']['message_pattern'] = text_buffer.get_text(*text_buffer.get_bounds(), include_hidden_chars=False)
+        config['DEFAULT']['message_pattern'] = text_buffer.get_text(
+            *text_buffer.get_bounds(),
+            include_hidden_chars=False
+        )
         self.__save_config_to_file(config)
 
     def set_status_bar_message(self, message: str):

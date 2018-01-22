@@ -25,8 +25,11 @@ class MyApplication(Gtk.Application):
     def do_startup(self):
         Gtk.Application.do_startup(self)
 
+
 def main():
     application = MyApplication("jmleroux.zoom2slack", Gio.ApplicationFlags.FLAGS_NONE)
     application.run()
 
-if __name__ == "__main__": main()
+
+if __name__ == "__main__":
+    main()
