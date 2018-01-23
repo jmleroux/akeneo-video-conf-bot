@@ -2,9 +2,9 @@
 
 A Python GTK+ application to send messages on Slack even without being connected.
 
-# Installation
+## Installation
 
-## Requirements
+### Requirements
 
 System requirements:
 
@@ -31,7 +31,7 @@ git clone https://github.com/jmleroux/slack-messenger.git
 cd slack-messenger
 ```
 
-# Usage
+## Usage
 
 ```
 python3 main.py
