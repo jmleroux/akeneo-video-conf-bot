@@ -1,3 +1,7 @@
+# Slack Messenger
+
+A Python GTK+ application to send messages on Slack even without being connected.
+
 # Installation
 
 ## Requirements
