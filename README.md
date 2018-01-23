@@ -31,6 +31,15 @@ git clone https://github.com/jmleroux/slack-messenger.git
 cd slack-messenger
 ```
 
+Copy the initial config:
+
+```
+cp config.ini.dist config.ini
+```
+
+This config is required to launch the application,
+but you will be able to change the config values via the UI after that.
+
 ## Usage
 
 ```
