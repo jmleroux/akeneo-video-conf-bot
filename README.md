@@ -23,8 +23,8 @@ sudo -H pip3 install slackclient
 Then get the project and enter it:
 
 ```
-git clone https://github.com/jmleroux/akeneo-video-conf-bot.git
-cd akeneo-video-conf-bot
+git clone https://github.com/jmleroux/slack-messenger.git
+cd slack-messenger
 ```
 
 # Usage

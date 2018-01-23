@@ -27,7 +27,7 @@ class MyApplication(Gtk.Application):
 
 
 def main():
-    application = MyApplication("jmleroux.zoom2slack", Gio.ApplicationFlags.FLAGS_NONE)
+    application = MyApplication("jmleroux.slack-messenger", Gio.ApplicationFlags.FLAGS_NONE)
     application.run()
 
 

@@ -4,7 +4,7 @@
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkWindow" id="config_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Configuration - Akeneo Zoom2Slack</property>
+    <property name="title" translatable="yes">Configuration - Slack Messenger</property>
     <signal name="delete-event" handler="close" swapped="no"/>
     <child>
       <object class="GtkBox" id="box_main">
