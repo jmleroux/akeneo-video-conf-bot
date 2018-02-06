@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 # noqa: E402
 
+import time
 import configparser
 import gi
+from slack import Slack
 
 gi.require_version('Gdk', '3.0')
 gi.require_version('Gtk', '3.0')

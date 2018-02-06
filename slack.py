@@ -8,48 +8,81 @@ __license__ = "OSL 3.0"
 
 
 class Slack:
-
     STATUS_OK = 'ok'
     STATUS_SENT = 'sent'
     STATUS_ERROR = 'error'
-
-    __user_id = ''
-    __token = ''
-    __last_error = ''
-    __slack_client = None
-    __channels = []
+    STATUS_CHANNELS_RELOAD = 'channels_reload'
 
     def __init__(self, user_id: str, bot_token: str):
         self.__user_id = user_id
         self.__token = bot_token
         self.__slack_client = SlackClient(self.__token)
+        self.__current_status = Slack.STATUS_OK
+        self.__last_error = ''
+        self.__my_channels = []
+
+    def get_current_status(self):
+        return self.__current_status
 
     def get_last_error(self):
         return self.__last_error
 
-    def get_my_channels(self):
+    def my_channels(self):
+        return self.__my_channels
 
-        if not self.__channels:
-            result = self.__slack_client.api_call(
-                "channels.list",
-                exclude_archived=1
+    def channels_generator(self):
+        """
+        Generator method
+        Get all channels
+        """
+        self.__current_status = self.STATUS_CHANNELS_RELOAD
+        result = self.__slack_client.api_call(
+            "channels.list",
+            exclude_archived=1
+        )
+
+        if not result['ok']:
+            self.__current_status = self.STATUS_ERROR
+            self.__last_error = result['error']
+            return self.__channels
+
+        self.__channels = []
+        for channel in result['channels']:
+            yield channel
+
+        self.__current_status = self.STATUS_OK
+
+    def my_channels_generator(self):
+        """
+        Generator method
+        Get channels the user belongs to and store their name and ID in cache
+        """
+        for channel in self.channels_generator():
+            print('Fetching members of channel "{}"'.format(channel['name']))
+            members = self.__slack_client.api_call(
+                "conversations.members",
+                channel=channel['id'],
+                limit=200
             )
 
-            if not result['ok']:
-                self.__last_error = result['error']
-                return self.__channels
+            if self.__user_id in members['members']:
+                channel['members'] = members['members']
+                self.__my_channels.append({
+                    'channel_id': channel['id'],
+                    'channel_name': channel['name'],
+                })
 
-            self.__channels = []
-            for channel in result['channels']:
-                if self.__user_id in channel['members']:
-                    self.__channels.append(channel)
+            yield channel
 
-        return self.__channels
-
-    def send_message(self, message: str, channel: str):
+    def send_message(self, message: str, channel_id: str):
+        """
+        Send message to a channel
+        :param message: str
+        :param channel_id: str Channel ID
+        """
         result = self.__slack_client.api_call(
             "chat.postMessage",
-            channel=channel,
+            channel=channel_id,
             text=message,
             as_user=True
         )
@@ -61,6 +94,12 @@ class Slack:
             return self.STATUS_ERROR
 
     def get_channel_messages(self, channel_name: str):
+        """
+        Generator method
+        Get all channel's messages
+
+        :param channel_name: str
+        """
         channel_id = self.get_channel_id(channel_name)
         result = self.__slack_client.api_call(
             "channels.history",
@@ -71,17 +110,19 @@ class Slack:
             self.__last_error = result['error']
             return self.STATUS_ERROR
 
-        messages = []
         for message in result['messages']:
-            messages.append(message)
+            yield message
 
-        return messages
-
-    def delete_messages(self, channel: str):
-        messages = self.get_channel_messages(channel)
-        channel_id = self.get_channel_id(channel)
+    def delete_messages(self, channel_name: str):
+        """
+        Delete all user's messages in a channel
+        :param channel_name: str
+        :return:
+        """
+        messages = self.get_channel_messages(channel_name)
+        channel_id = self.get_channel_id(channel_name)
         for message in messages:
-            if self.__user_id == message['user']:
+            if 'user' in message and self.__user_id == message['user']:
                 self.__slack_client.api_call(
                     "chat.delete",
                     channel=channel_id,
@@ -91,9 +132,28 @@ class Slack:
         return self.STATUS_OK
 
     def get_channel_id(self, channel_name: str):
-        channels = self.get_my_channels()
+        """
+        Find the channel ID from its name
+        :param channel_name:
+        :return: str
+        """
+        channels = self.channels_generator()
         for channel in channels:
-            if self.__user_id in channel['members'] and channel['name'] == channel_name:
+            if channel['name'] == channel_name:
                 return channel['id']
 
         return None
+
+    def get_channel_members(self, channel_id: str):
+        """
+        Find all members in a channel
+        :param channel_id:
+        :return:
+        """
+        members = self.__slack_client.api_call(
+            "conversations.members",
+            channel=channel_id,
+            limit=200
+        )
+
+        return members['members']

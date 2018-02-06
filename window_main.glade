@@ -109,7 +109,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_reload">
-                <property name="label" translatable="yes">Reload channels</property>
+                <property name="label" translatable="yes">Check channels</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
