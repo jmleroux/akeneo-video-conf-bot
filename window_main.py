@@ -111,9 +111,15 @@ class AppWindow(Gtk.ApplicationWindow):
             else:
                 bad_channels.append(channel_name)
 
+        self.builder.get_object("combo_channels").get_model().clear()
+        self.build_channels_combo()
+
         if len(bad_channels) > 0:
             message = 'Misconfigured channels: %s' % (', '.join(bad_channels))
-            self.set_status_bar_message(message)
+        else:
+            message = 'Channels reloaded'
+
+        self.set_status_bar_message(message)
 
     # ---------------------------------------------------------------------------------
     # handlers

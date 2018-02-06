@@ -156,4 +156,7 @@ class Slack:
             limit=200
         )
 
-        return members['members']
+        if 'members' in members:
+            return members['members']
+
+        return []
